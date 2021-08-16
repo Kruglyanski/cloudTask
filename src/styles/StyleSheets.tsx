@@ -28,7 +28,8 @@ const Styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopStartRadius: 10,
     borderTopEndRadius: 10,
-    height: 'auto',
+    height: '50%',
+    maxHeight: '50%',
     width: '100%',
     position: 'absolute',
     bottom: 0
@@ -51,27 +52,23 @@ const Styles = StyleSheet.create({
     paddingRight: 10
   },
   fab: {
-    justifyContent: 'flex-end',
-    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
     margin: 20,
     backgroundColor: ADDITIONAL_COLOR,
     color: 'white'
   },
-  modalNewTask: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%'
+  createTaskContainer: {
+     height: '100%',
+    maxHeight: '70%',
   },
   newTaskElement: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingRight: 10
+    paddingRight: 10,
+    marginTop:50
   },
   newTaskInput: {
     height: 70,

@@ -2,19 +2,23 @@ import React, {ReactNode, useState} from 'react'
 import {View} from 'react-native'
 import {useDispatch} from 'react-redux'
 import {IconButton} from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 import Styles from '../styles/StyleSheets'
 // @ts-ignore
 import Swipeable from 'react-native-swipeable'
 import {DeleteTask} from '../redux/AsyncActionCreators'
-import {ModalCreateTask} from './ModalCreateTask'
+import {CreateTask} from '../screens/CreateTask'
 import {TodoType} from '../utils/dataTypes'
+import {CreateTaskScreenNavigationProp} from '../Main'
 
 type PropsType = {
   children: ReactNode
-  item: TodoType
+  item: TodoType,
+  taskType: 'completed' | 'current'
 }
-export const SwipeableCustom: React.FC<PropsType> = ({children, item}) => {
-  const [isVisible, setIsVisible] = useState(false)
+
+export const SwipeableCustom: React.FC<PropsType> = ({children, item, taskType}) => {
+const navigation = useNavigation<CreateTaskScreenNavigationProp>()
   const [currentTitle, setCurrentTitle] = useState('')
   const [currentListId, setCurrentListId] = useState(0)
   const [currentId, setCurrentId] = useState(0)
@@ -25,16 +29,25 @@ export const SwipeableCustom: React.FC<PropsType> = ({children, item}) => {
     dispatch(DeleteTask(id, listId))
   }
 
-  const changeTaskHandler = (title: string, listId: number, id: number) => {
+  const leftActionHandler = (title: string, listId: number, id: number) => {
     title && setCurrentTitle(title)
     listId && setCurrentListId(listId)
     id && setCurrentId(id)
-    setIsVisible(true)
+  }
+
+  const changeTaskHandler = () => {
+    navigation.navigate('CreateTask', {
+      currentListId,
+      currentTitle,
+      currentId
+    })
   }
 
   return (
     <View>
       <Swipeable
+        leftActionActivationDistance={70}
+        onLeftActionRelease={() =>leftActionHandler(item.text, item.listId, item.id)}
         rightButtons={[
           <View style={Styles.rightSwipeButton}>
             <IconButton
@@ -44,25 +57,21 @@ export const SwipeableCustom: React.FC<PropsType> = ({children, item}) => {
             />
           </View>
         ]}
-        leftButtons={[
+        leftButtons={
+          (taskType ==='current')
+            ?
+            [
           <View style={Styles.leftSwipeButton}>
             <IconButton
               icon="pencil"
               color={'rgb(178,34,34)'}
-              onPress={() => changeTaskHandler(item.text, item.listId, item.id)}
+              onPress={changeTaskHandler}
             />
           </View>
-        ]}
+        ]: null}
       >
         {children}
       </Swipeable>
-      <ModalCreateTask
-        setIsVisible={setIsVisible}
-        isVisible={isVisible}
-        currentTitle={currentTitle}
-        currentListId={currentListId}
-        currentId={currentId}
-      />
     </View>
   )
 }

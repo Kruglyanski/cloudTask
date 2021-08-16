@@ -7,6 +7,21 @@ const MainStyle = StyleSheet.create({
   text: {
     flex: 1,
     textAlign: 'center'
+  },
+  error: {
+    flex: 1,
+    marginTop:50,
+    textAlign: 'center',
+    alignItems: 'center'
+  },
+  errorText: {
+    textAlign: 'center',
+    color: 'red',
+  },
+  reload: {
+    flex: 1,
+    textAlign: 'center',
+
   }
 })
 

@@ -1,34 +1,46 @@
-import React, {useEffect} from 'react'
-import {ScrollView, Text, View} from 'react-native'
-import Header from './components/Header'
-import {ToDoList} from './components/ToDoList'
+import React from 'react'
+import {createStackNavigator, StackNavigationProp} from '@react-navigation/stack'
+import {RouteProp} from '@react-navigation/native'
+import {Home} from './screens/Home'
+import {View} from 'react-native'
 import MainStyle from './styles/MainStyle'
-import NewTask from './components/NewTask'
-import {GetList} from './redux/AsyncActionCreators'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootStateType} from './redux/Store'
+import {CreateTask} from './screens/CreateTask'
 
-export default function Main() {
-  const isLoading = useSelector((state: RootStateType) => state.isLoading)
-  const dispatch = useDispatch()
+type RootStackParamList = {
+  Home: undefined
+  CreateTask: {
+    currentListId: string,
+    currentTitle: string,
+    currentId: number
+  } | undefined
+}
 
-  useEffect(() => {
-    dispatch(GetList())
-  }, [])
+const {Screen, Navigator} = createStackNavigator<RootStackParamList>()
+
+export type CreateTaskScreenRouteProp = RouteProp<RootStackParamList, 'CreateTask'>
+
+export type CreateTaskScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateTask'>
+
+export const Main: React.FC = () => {
 
   return (
     <View style={MainStyle.mainContainer}>
-      <Header/>
-      {
-        isLoading
-          ?
-          <Text style={MainStyle.text}>Loading...</Text>
-          :
-          <ScrollView>
-            <ToDoList/>
-          </ScrollView>
-      }
-      <NewTask/>
+      <Navigator headerMode='none' initialRouteName='Home'>
+        <Screen
+          name='Home'
+          component={Home}
+          options={{
+            title: 'Home'
+          }}
+        />
+        <Screen
+          name='CreateTask'
+          component={CreateTask}
+          options={{
+            title: 'CreateTask'
+          }}
+        />
+      </Navigator>
     </View>
   )
 }

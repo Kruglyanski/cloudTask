@@ -51,7 +51,7 @@ export const CompletedList: React.FC<PropsType> = ({todos}) => {
                 ?
                 <View>
                   {
-                    checkedTodos && checkedTodos.map(item => <SwipeableCustom item={item}>
+                    checkedTodos && checkedTodos.map(item => <SwipeableCustom item={item} taskType='completed'>
                         <CheckContainer item={item} isChecked={false}>
                           <View style={Styles.completedListWrapper} key={item.id}>
                             <IconButton

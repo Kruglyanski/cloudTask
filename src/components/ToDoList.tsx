@@ -11,7 +11,7 @@ export const ToDoList = () => {
     <View style={Styles.list}>
       {
         lists && lists.sort((a: any, b: any) => (a.updatedAt - b.updatedAt)).map(item => {
-          return <ToDoListItem key={item.id} title={item.title} todos={item.todos}/>
+          return <ToDoListItem key={item.id} title={item.title} todos={item.todos} />
         })
       }
     </View>

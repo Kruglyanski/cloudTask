@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {IconButton, Modal, Portal} from 'react-native-paper'
-import {Text, TextInput, View} from 'react-native'
+import {ScrollView, Text, TextInput, View} from 'react-native'
 import {SendList} from '../redux/AsyncActionCreators'
 import Styles from '../styles/StyleSheets'
 import {ModalList} from './ModalList'
@@ -35,10 +35,6 @@ export const ModalCreateCategory: React.FC<PropsType> = ({editLists, setEditList
     setInputValue(text)
   }
 
-  const focusHandler = () => {
-    textInput.current && textInput.current.focus()
-  }
-
   return (
     <Portal>
       <Modal
@@ -46,7 +42,9 @@ export const ModalCreateCategory: React.FC<PropsType> = ({editLists, setEditList
         onDismiss={() => setEditLists(false)}
         contentContainerStyle={Styles.modalContainer}
       >
-        <ModalList/>
+        <ScrollView>
+          <ModalList/>
+      </ScrollView>
         {messageVisibility && <Text style={Styles.validationMessage}>Введите название категории!</Text>}
         <View style={Styles.modalInput}>
           <TextInput
@@ -56,12 +54,11 @@ export const ModalCreateCategory: React.FC<PropsType> = ({editLists, setEditList
             value={inputValue}
             onChangeText={inputHandler}
             onSubmitEditing={addCategory}
-            blurOnSubmit={false}
           />
           <IconButton
             icon="plus"
             color={ADDITIONAL_TEXT_COLOR}
-            onPress={focusHandler}
+            onPress={addCategory}
           />
         </View>
       </Modal>
