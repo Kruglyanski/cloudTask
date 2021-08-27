@@ -38,12 +38,13 @@ export const CreateTask = () => {
   }
 
   const createTask = () => {
-    if (value && textInputValue) {
+    const trimmedTextInputValue = textInputValue.trim()
+    if (value && trimmedTextInputValue) {
       route.params && route.params.currentId && route.params.currentListId
         ?
-        dispatch(PatchTask(value, textInputValue, route.params.currentId))
+        dispatch(PatchTask(value, trimmedTextInputValue, route.params.currentId))
         :
-        dispatch(SendTask(value, textInputValue))
+        dispatch(SendTask(value, trimmedTextInputValue))
       setValue('')
       setTextInputValue('')
       navigation.navigate('Home')

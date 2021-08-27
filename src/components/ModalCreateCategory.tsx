@@ -20,8 +20,9 @@ export const ModalCreateCategory: React.FC<PropsType> = ({editLists, setEditList
   const dispatch = useDispatch()
 
   const addCategory = () => {
-    if (inputValue) {
-      dispatch(SendList(inputValue))
+    const trimmedInputValue = inputValue.trim()
+    if (trimmedInputValue) {
+      dispatch(SendList(trimmedInputValue))
       setEditLists(false)
       setInputValue('')
     } else {

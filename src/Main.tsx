@@ -25,19 +25,21 @@ export const Main: React.FC = () => {
 
   return (
     <View style={MainStyle.mainContainer}>
-      <Navigator headerMode='none' initialRouteName='Home'>
+      <Navigator initialRouteName='Home'>
         <Screen
           name='Home'
           component={Home}
           options={{
-            title: 'Home'
+            title: 'Home',
+            headerShown: false
           }}
         />
         <Screen
           name='CreateTask'
           component={CreateTask}
           options={{
-            title: 'CreateTask'
+            title: 'CreateTask',
+            headerShown: false
           }}
         />
       </Navigator>
